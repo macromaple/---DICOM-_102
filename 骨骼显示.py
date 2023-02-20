@@ -101,8 +101,11 @@ def plot_3d(image, threshold=-300):
 
     plt.show()
 
+# laptop
+# dicom_folder = 'F:/bysj/---DICOM-_102/data/'
+# desktop
+dicom_folder = './data/'
 
-dicom_folder = 'F:/bysj/---DICOM-_102/data/'
 patients = os.listdir(dicom_folder)
 print(patients)
 
@@ -119,7 +122,7 @@ print("get_hu OK")
 # 其中，挑选一个中间位置的切片进行显示
 # plt.imshow(sample_patient_pixels[100], cmap=plt.cm.gray)
 # plt.show()
-
+6
 
 pix_resampled, spacing = resample(
     sample_patient_pixels, sample_patient, [1, 1, 1])

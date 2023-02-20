@@ -151,8 +151,11 @@ def segment_lung_mask(image, fill_lung_structures=True):
 
     return binary_image
 
+# laptop
+# dicom_folder = 'F:/bysj/---DICOM-_102/data/'
+# desktop
+dicom_folder = './data/'
 
-dicom_folder = 'F:/bysj/---DICOM-_102/data/'
 patients = os.listdir(dicom_folder)
 
 sample_patient = load_dicom(dicom_folder + patients[0])
