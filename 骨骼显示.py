@@ -70,9 +70,10 @@ def resample(image, scan, new_spacing=[1, 1, 1]):
     new_spacing = spacing / real_resize_factor
 
     # 使用 scipy.ndimage.interpolation.zoom 进行数组缩放
-    image = scipy.ndimage.interpolation.zoom(image,
-                                             real_resize_factor,
-                                             mode='nearest')  # 插值模式
+    # Please use `zoom` from the `scipy.ndimage` namespace, the `scipy.ndimage.interpolation` namespace is deprecated.
+    image = scipy.ndimage.zoom(image,
+                               real_resize_factor,
+                               mode='nearest')  # 插值模式
 
     return image, new_spacing
 
@@ -101,13 +102,15 @@ def plot_3d(image, threshold=-300):
     plt.show()
 
 
-dicom_folder = './data/'
+dicom_folder = 'F:/bysj/---DICOM-_102/data/'
 patients = os.listdir(dicom_folder)
 print(patients)
 
 # 加载第一个患者的扫描片目录，由于实验数据集内只有一个患者，选择 0
 sample_patient = load_dicom(dicom_folder + patients[0])
+print("load_dicom OK")
 sample_patient_pixels = get_hu(sample_patient)
+print("get_hu OK")
 # plt.hist(sample_patient_pixels.flatten(), bins=80, color='c')
 # plt.xlabel("HU 单位 (Hounsfield Units)")
 # plt.ylabel("频率")
@@ -120,6 +123,7 @@ sample_patient_pixels = get_hu(sample_patient)
 
 pix_resampled, spacing = resample(
     sample_patient_pixels, sample_patient, [1, 1, 1])
+print("resample OK")
 # print("重采样前的形状\t", sample_patient_pixels.shape)
 # print("重采样后的形状\t", pix_resampled.shape)
 
@@ -128,6 +132,7 @@ start_sum = time.time()  # 记录3D渲染开始时间
 
 # 定义 HU 阈值，仅将骨骼结构渲染为三维图像
 plot_3d(pix_resampled, 400)
+print("plot_3d OK")
 
 end_sum = time.time()  # 记录3D渲染结束时间
 print('渲染总耗时：', end_sum - start_sum, '秒')

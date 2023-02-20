@@ -70,9 +70,10 @@ def resample(image, scan, new_spacing=[1, 1, 1]):
     new_spacing = spacing / real_resize_factor
 
     # 使用 scipy.ndimage.interpolation.zoom 进行数组缩放
-    image = scipy.ndimage.interpolation.zoom(image,
-                                             real_resize_factor,
-                                             mode='nearest')  # 插值模式
+    # Please use `zoom` from the `scipy.ndimage` namespace, the `scipy.ndimage.interpolation` namespace is deprecated.
+    image = scipy.ndimage.zoom(image,
+                               real_resize_factor,
+                               mode='nearest')  # 插值模式
 
     return image, new_spacing
 
@@ -151,7 +152,7 @@ def segment_lung_mask(image, fill_lung_structures=True):
     return binary_image
 
 
-dicom_folder = './data/'
+dicom_folder = 'F:/bysj/---DICOM-_102/data/'
 patients = os.listdir(dicom_folder)
 
 sample_patient = load_dicom(dicom_folder + patients[0])
